@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Masjid Conge</title>
+<style>
+  body {
+    margin: 0;
+    background: url('flowers.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Buku memenuhi layar penuh */
+  .book {
+    position: relative;
+    width: 100vw;           /* isi penuh lebar layar */
+    height: 100vh;          /* isi penuh tinggi layar */
+    max-width: 600px;       /* batas maksimal di laptop */
+    max-height: 1000px;     /* agar tidak terlalu tinggi di PC */
+    perspective: 2000px;
+  }
+
+  .page {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    transform-origin: left center;
+    transition: transform 2s ease-in-out;
+    background: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    overflow: hidden;
+  }
+
+  .page img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* isi penuh tanpa ruang putih */
+    display: block;
+    border-radius: 10px;
+  }
+
+  .cover {
+    z-index: 100;
+  }
+
+  .back-cover {
+    background: lightblue;
+  }
+
+  /* Penyesuaian khusus untuk HP */
+  @media (max-width: 450px) {
+    body {
+      height: 100dvh; /* pastikan penuh di Android */
+    }
+    .book {
+      width: 100vw;
+      height: 100dvh; /* penuh tinggi layar HP */
+    }
+    .page img {
+      object-fit: cover; /* tetap isi penuh proporsional */
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Musik latar -->
+<audio id="bgm" loop>
+  <source src="https://www.geocities.ws/conge/musikislami.mp3" type="audio/mpeg">
+  Browser Anda tidak mendukung audio.
+</audio>
+
+<div class="book" id="book">
+  <!-- Cover depan -->
+  <div class="page cover" data-page="0">
+    <img src="https://www.geocities.ws/conge/6.png" alt="Cover Buku">
+  </div>
+
+  <!-- Halaman 1 -->
+  <div class="page" data-page="1">
+    <img src="https://www.geocities.ws/conge/7.png" style="width:100%; height:auto;">
+  </div>
+
+  <!-- Halaman 2 -->
+  <div class="page" data-page="2">
+    <img src="https://www.geocities.ws/conge/8.png" style="width:100%; height:auto;">
+  </div>
+
+  <!-- Halaman 3 -->
+  <div class="page" data-page="3">
+    <img src="https://www.geocities.ws/conge/page9.png" style="width:100%; height:auto;">
+  </div>
+
+<!-- Halaman 4 -->
+  <div class="page" data-page="3">
+    <img src="https://www.geocities.ws/conge/Mbah%20Mursodo/10.png" style="width:100%; height:auto;">
+  </div>
+
+  <!-- Back cover -->
+  <div class="page back-cover" data-page="10"></div>
+</div>
+
+<script>
+  const audio = document.getElementById("bgm");
+  const pages = document.querySelectorAll(".page");
+  let zIndexCounter = 1;
+
+  // Musik mulai setelah klik pertama
+  document.body.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play().catch(() => {});
+    }
+  }, { once: true });
+
+  // Urutan halaman agar cover di depan
+  pages.forEach((page, index) => {
+    page.style.zIndex = pages.length - index;
+  });
+
+  // Efek buka halaman
+  pages.forEach((page) => {
+    page.addEventListener("click", () => {
+      if (!page.classList.contains("flipped")) {
+        page.style.transform = "rotateY(-180deg)";
+        page.classList.add("flipped");
+        page.style.zIndex = ++zIndexCounter;
+
+        // Hentikan musik saat back cover dibuka
+        if (page.classList.contains("back-cover")) {
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      } else {
+        page.style.transform = "rotateY(0deg)";
+        page.classList.remove("flipped");
+        page.style.zIndex = ++zIndexCounter;
+      }
+    });
+  });
+</script>
+
+<script>
+  // Pastikan musik ditemukan
+  const bgm = document.getElementById("bgm");
+
+  // 🔽 Ubah angka ini sesuai kebutuhan volume:
+  // 0.1 = sangat pelan, 0.5 = sedang, 1.0 = penuh
+  bgm.volume = 0.1;  
+</script>
+
+</body>
+</html>
