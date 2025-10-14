@@ -19,10 +19,10 @@
   /* Buku memenuhi layar penuh */
   .book {
     position: relative;
-    width: 100vw;           /* isi penuh lebar layar */
-    height: 100vh;          /* isi penuh tinggi layar */
-    max-width: 600px;       /* batas maksimal di laptop */
-    max-height: 1000px;     /* agar tidak terlalu tinggi di PC */
+    width: 100vw;           
+    height: 100vh;          
+    max-width: 600px;       
+    max-height: 1000px;     
     perspective: 2000px;
   }
 
@@ -43,7 +43,7 @@
   .page img {
     width: 100%;
     height: 100%;
-    object-fit: cover;  /* isi penuh tanpa ruang putih */
+    object-fit: cover;  
     display: block;
     border-radius: 10px;
   }
@@ -59,14 +59,15 @@
   /* Penyesuaian khusus untuk HP */
   @media (max-width: 450px) {
     body {
-      height: 100dvh; /* pastikan penuh di Android */
+      height: 100dvh;
+      padding-left: 0.5cm; /* ✅ Tambah jarak 0.5 cm dari tepi kiri layar Android */
     }
     .book {
-      width: 100vw;
-      height: 100dvh; /* penuh tinggi layar HP */
+      width: calc(100vw - 0.5cm); /* ✅ Kurangi sedikit lebar agar tetap pas di kanan */
+      height: 100dvh;
     }
     .page img {
-      object-fit: cover; /* tetap isi penuh proporsional */
+      object-fit: cover;
     }
   }
 </style>
@@ -100,8 +101,8 @@
     <img src="https://www.geocities.ws/conge/page9.png" style="width:100%; height:auto;">
   </div>
 
-<!-- Halaman 4 -->
-  <div class="page" data-page="3">
+  <!-- Halaman 4 -->
+  <div class="page" data-page="4">
     <img src="https://www.geocities.ws/conge/Mbah%20Mursodo/10.png" style="width:100%; height:auto;">
   </div>
 
@@ -149,12 +150,8 @@
 </script>
 
 <script>
-  // Pastikan musik ditemukan
   const bgm = document.getElementById("bgm");
-
-  // 🔽 Ubah angka ini sesuai kebutuhan volume:
-  // 0.1 = sangat pelan, 0.5 = sedang, 1.0 = penuh
-  bgm.volume = 0.5;  
+  bgm.volume = 0.5;  // Volume musik latar sedang
 </script>
 
 </body>
