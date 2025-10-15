@@ -58,13 +58,20 @@
 
   /* Penyesuaian khusus untuk HP */
   @media (max-width: 450px) {
+    /* Tambahan: beri jarak 0.5cm dari atas, 0.5cm dari kiri, dan 0.5cm dari bawah */
     body {
       height: 100dvh;
-      padding-left: 1cm; /* ✅ Tambah jarak 0.5 cm dari tepi kiri layar Android */
+      padding-top: 0.5cm;    /* ✅ 0.5 cm dari tepi atas Android */
+      padding-left: 1cm;   /* ✅ 1 cm dari tepi kiri Android */
+      padding-right: 0.5cm;   /* ✅ 1 cm dari tepi kiri Android */
+      padding-bottom: 0.5cm; /* ✅ 0.5 cm dari tepi bawah Android */
+      /* kanan dibiarkan sesuai sebelumnya (tidak diubah) */
+      box-sizing: border-box;
     }
+    /* Sesuaikan ukuran .book agar tidak menutupi padding */
     .book {
-      width: calc(100vw - 0.5cm); /* ✅ Kurangi sedikit lebar agar tetap pas di kanan */
-      height: 100dvh;
+      width: calc(100vw - 0.5cm);            /* tetap sesuai ruang kiri yang kita sisakan */
+      height: calc(100dvh - 1cm);            /* kurangi total 0.5cm top + 0.5cm bottom */
     }
     .page img {
       object-fit: cover;
